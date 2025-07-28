@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search } from "./components/Search";
 import { getBooksList } from "./api/books";
 import type { BookList } from "./types/books";
+import { Books } from "./components/BooksList";
 
 export default function App() {
   const [page, setPage] = useState(1);
@@ -10,7 +11,7 @@ export default function App() {
   const [bookList, setBookList] = useState<BookList | null>(null);
   const [text, setText] = useState("");
 
-  async function handleClick(text: string) {
+  async function handleClick(text: string, page: number) {
     setLoading(true);
     setError("");
 
@@ -26,22 +27,31 @@ export default function App() {
 
   function handlePag() {
     setPage(page + 1);
-    handleClick(text);
+    handleClick(text, page);
   }
 
   return (
-    <div>
-      <Search handleClick={handleClick} text={text} setText={setText} />
+    <div className="main-page">
+      <Search
+        handleClick={handleClick}
+        text={text}
+        setText={setText}
+        page={page}
+      />
       {loading ? (
         <div>Loading...</div>
       ) : (
-        bookList?.items.map((book) => <div>{book.volumeInfo.title}</div>)
+        <div className="book-container">
+          <Books bookList={bookList?.items || []} />
+        </div>
       )}
       {error && <div>{error}</div>}
-      {/* Books -> Book */}
-      {/* Pagination */}
-      <button onClick={handlePag}>prev</button>
-      <button onClick={handlePag}>next</button>
+      {bookList ? (
+        <div>
+          <button onClick={handlePag}>prev</button>
+          <button onClick={handlePag}>next</button>
+        </div>
+      ) : null}
     </div>
   );
 }

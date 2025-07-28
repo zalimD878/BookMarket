@@ -1,0 +1,16 @@
+.book-card {
+  margin-top: 15px;
+  border-radius: 10px;
+  display: flex;
+  border: 1px solid;
+  flex-flow: column;
+}
+
+.book-container {
+}
+
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
