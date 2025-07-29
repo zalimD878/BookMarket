@@ -41,9 +41,7 @@ export default function App() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="book-container">
-          <Books bookList={bookList?.items || []} />
-        </div>
+        <Books bookList={bookList?.items || []} />
       )}
       {error && <div>{error}</div>}
       {bookList ? (
